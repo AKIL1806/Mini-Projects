@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Password Generator</h1>
+    <input type="number" id="length" placeholder="Enter password length" min="4">
+    <button onclick="generatePassword()">Generate</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    function generatePassword() {
+      const length = parseInt(document.getElementById('length').value);
+      if (isNaN(length) || length < 4) {
+        document.getElementById('result').textContent = "Please enter a valid number (min 4)";
+        return;
+      }
+
+      const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const lower = "abcdefghijklmnopqrstuvwxyz";
+      const digits = "0123456789";
+      const symbols = "!@#$%^&*()_+[]{}|;:,.<>?";
+      const allChars = upper + lower + digits + symbols;
+
+      let password = [
+        upper[Math.floor(Math.random() * upper.length)],
+        lower[Math.floor(Math.random() * lower.length)],
+        digits[Math.floor(Math.random() * digits.length)],
+        symbols[Math.floor(Math.random() * symbols.length)]
+      ];
+
+      for (let i = 0; i < length - 4; i++) {
+        password.push(allChars[Math.floor(Math.random() * allChars.length)]);
+      }
+
+      // Shuffle password
+      password = password.sort(() => Math.random() - 0.5);
+      document.getElementById('result').textContent = password.join('');
+    }
+  </script>
+</body>
+</html>
